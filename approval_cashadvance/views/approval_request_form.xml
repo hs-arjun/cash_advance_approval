@@ -5,15 +5,7 @@
         <field name="model">approval.request</field>
         <field name="inherit_id" ref="approvals.approval_request_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
-                <button name="create_cash_advance"
-                        type="object"
-                        string="Create Cash Advance"
-                        class="btn-primary"
-                        icon="fa-check-square"/>
-            </xpath>
-            <xpath expr="//sheet" position="inside">
-                <div class="o_not_full oe_button_box" name="button_box">
+            <div name="button_box" position="inside">
                 <button name="action_open_sales_orders"
                         type="object"
                         string="Sales Orders"
@@ -21,7 +13,13 @@
                         icon="fa-file-text-o">
                     <field name="sales_order_id" widget="statinfo"/>
                 </button>
-                </div>
+            </div>
+            <xpath expr="//header" position="inside">
+                <button name="create_cash_advance"
+                        type="object"
+                        string="Create Cash Advance"
+                        class="btn-primary"
+                        icon="fa-check-square"/>
             </xpath>
         </field>
     </record>

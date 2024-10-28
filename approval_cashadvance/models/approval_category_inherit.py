@@ -36,15 +36,14 @@ class ApprovalRequestInherit(models.Model):
         """Open related Sales Orders created by this approval request."""
         self.ensure_one()
         # Check if `sales_order_id` is set and valid
-        if not self.sales_order_id.exists():
+        if not self.sales_order_id:
             raise ValueError(_("No Sales Order is linked to this Approval Request."))
         # Define the domain to open the related sales order
-        action = {
+        return {
             'name': _('Sales Orders'),
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             'res_model': 'sale.order',
+            'res_id': self.sales_order_id.id,
             'target': 'current',
-            'res_id': self.sales_order_id.id,  # Directly open the sales order record
         }
-        return action

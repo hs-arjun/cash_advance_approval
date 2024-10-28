@@ -11,6 +11,9 @@
                         string="Create Cash Advance"
                         class="btn-primary"
                         icon="fa-check-square"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <div class="o_not_full oe_button_box" name="button_box">
                 <button name="action_open_sales_orders"
                         type="object"
                         string="Sales Orders"
@@ -18,6 +21,7 @@
                         icon="fa-file-text-o">
                     <field name="sales_order_id" widget="statinfo"/>
                 </button>
+                </div>
             </xpath>
         </field>
     </record>

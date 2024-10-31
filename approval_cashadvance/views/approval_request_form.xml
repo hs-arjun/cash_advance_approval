@@ -30,7 +30,7 @@
                         class="btn-primary"
                         icon="fa-check-square"/>
             </xpath>
-            <xpath expr="//field[@name='request_owner_id']" position="after">
+            <xpath expr="//field[@name='category_id']" position="before">
                 <field name="employee" options="{'no_create': True}" invisible="category_id.approval_type != 'cash_advance'"/>
             </xpath>
         </field>

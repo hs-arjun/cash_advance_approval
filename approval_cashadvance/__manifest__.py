@@ -14,6 +14,8 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/approval_request_form.xml',
+        'views/approval_type.xml',
+        'views/payment_inherit.xml',
     ],
     # 'license': 'OEEL-1',
     'auto_install': False,

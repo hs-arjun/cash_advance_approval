@@ -10,40 +10,48 @@ class ApprovalCategoryInherit(models.Model):
             ('cash_advance', 'Cash Advance')
         ]
     )
+    employee = fields.Many2one('hr.employee', string="Employee")
 
 
 class ApprovalRequestInherit(models.Model):
     _inherit = 'approval.request'
 
-    sales_order_id = fields.Many2one('sale.order', string="Related Sales Order")
+    payment_id = fields.Many2one('account.payment', string="Related Payment")
+    employee = fields.Many2one('hr.employee', string="Employee")
 
     def create_cash_advance(self):
         """ Create and/or modify Sales Orders. """
         self.ensure_one()
-        # Define the customer for the Sales Order (e.g., use self.partner_id or define the logic to get customer)
-        customer = self.request_owner_id  # Adjust this line based on your model's setup
-        # Create a blank Sales Order
-        so_vals = {
-            'partner_id': customer.id,
-            'origin': self.name,  # Set origin as the approval request's name
-            # Add any additional fields if needed
+        employee = self.employee
+        # Find the "Cash Advance" journal
+        cash_advance_journal = self.env['account.journal'].search([('name', '=', 'Cash Advance')], limit=1)
+        if not cash_advance_journal:
+            raise ValueError(
+                _("Cash Advance journal not found. Please create it in Accounting > Configuration > Journals."))
+        # Prepare payment values
+        payment_vals = {
+            'partner_id': employee.id,
+            'amount': self.amount,  # Use appropriate amount field
+            'journal_id': cash_advance_journal.id,
+            'payment_type': 'outbound',  # Adjust based on payment type
         }
-        sales_order = self.env['sale.order'].create(so_vals)
-        # Store the sales order reference if needed for future actions
-        self.sales_order_id = sales_order.id  # Assuming you've added a Many2one field `sales_order_id`
+        # Create the Account Payment
+        payment = self.env['account.payment'].create(payment_vals)
+        # Link the payment to the approval request
+        self.payment_id = payment.id
 
-    def action_open_sales_orders(self):
+    def action_open_cash_advance(self):
         """Open related Sales Orders created by this approval request."""
         self.ensure_one()
         # Check if `sales_order_id` is set and valid
-        if not self.sales_order_id:
-            raise ValueError(_("No Sales Order is linked to this Approval Request."))
+        if not self.payment_id:
+            raise ValueError(_("No Cash Advance is linked to this Approval Request."))
         # Define the domain to open the related sales order
         return {
-            'name': _('Sales Orders'),
+            'name': _('Cash Advance'),
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
-            'res_model': 'sale.order',
-            'res_id': self.sales_order_id.id,
+            'res_model': 'account.payment',
+            'res_id': self.payment_id.id,
             'target': 'current',
         }

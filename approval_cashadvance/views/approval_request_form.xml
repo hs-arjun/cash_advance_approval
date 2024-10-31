@@ -5,16 +5,23 @@
         <field name="model">approval.request</field>
         <field name="inherit_id" ref="approvals.approval_request_view_form"/>
         <field name="arch" type="xml">
-            <div name="button_box" position="inside">
+            <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_open_cash_advance"
                         type="object"
-                        string="Sales Orders"
+                        string="Payment"
                         class="oe_stat_button btn-primary"
-                        icon="fa-file-text-o">
-                    <field name="payment_id" widget="statinfo"/>
-                    Cash Advance
-                </button>
-            </div>
+                        icon="fa-file-text-o"/>
+            </xpath>
+<!--            <div name="button_box" position="inside">-->
+<!--                <button name="action_open_cash_advance"-->
+<!--                        type="object"-->
+<!--                        string="Sales Orders"-->
+<!--                        class="oe_stat_button btn-primary"-->
+<!--                        icon="fa-file-text-o">-->
+<!--                    <field name="payment_id" widget="statinfo"/>-->
+<!--                    Cash Advance-->
+<!--                </button>-->
+<!--            </div>-->
             <xpath expr="//header" position="inside">
                 <button name="create_cash_advance"
                         type="object"

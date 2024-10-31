@@ -8,6 +8,8 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="employee" options="{'no_create': True}"/>
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="replace">
+            </xpath>
         </field>
     </record>
 </odoo>

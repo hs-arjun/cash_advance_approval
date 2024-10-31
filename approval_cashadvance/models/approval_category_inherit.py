@@ -39,6 +39,7 @@ class ApprovalRequestInherit(models.Model):
             'amount': self.amount,  # Use appropriate amount field
             'journal_id': cash_advance_journal.id,
             'payment_type': 'outbound',  # Adjust based on payment type
+            'approval_request_id': self.id,
         }
         # Create the Account Payment
         payment = self.env['account.payment'].create(payment_vals)
@@ -60,3 +61,8 @@ class ApprovalRequestInherit(models.Model):
             'res_id': self.payment_id.id,
             'target': 'current',
         }
+
+class AccountPaymentInherit(models.Model):
+    _inherit = 'account.payment'
+
+    approval_request_id = fields.Many2one('approval.request', string="Approval Request", help="The related approval request for this payment.")

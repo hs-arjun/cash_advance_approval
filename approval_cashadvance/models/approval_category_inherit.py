@@ -18,6 +18,11 @@ class ApprovalRequestInherit(models.Model):
 
     payment_id = fields.Many2one('account.payment', string="Related Payment")
     employee = fields.Many2one('hr.employee', string="Employee")
+    payment_count = fields.Integer(string="Payment Count", compute="_compute_payment_count", store=True)
+
+    def _compute_payment_count(self):
+        for record in self:
+            record.payment_count = self.env['account.payment'].search_count([('approval_request_id', '=', record.id)])
 
     def create_cash_advance(self):
         """ Create and/or modify Sales Orders. """

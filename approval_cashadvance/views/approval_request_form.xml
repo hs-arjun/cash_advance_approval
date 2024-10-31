@@ -5,9 +5,8 @@
         <field name="model">approval.request</field>
         <field name="inherit_id" ref="approvals.approval_request_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='amount']" position="before">
+            <xpath expr="//field[@name='request_owner_id']" position="before">
                 <field name="employee" options="{'no_create': True}" />
-<!--                invisible="category_id.approval_type != 'cash_advance'"-->
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_open_cash_advance"

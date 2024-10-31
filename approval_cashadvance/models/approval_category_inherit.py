@@ -30,7 +30,7 @@ class ApprovalRequestInherit(models.Model):
                 _("Cash Advance journal not found. Please create it in Accounting > Configuration > Journals."))
         # Prepare payment values
         payment_vals = {
-            'partner_id': employee.id,
+            'employee': employee.id,
             'amount': self.amount,  # Use appropriate amount field
             'journal_id': cash_advance_journal.id,
             'payment_type': 'outbound',  # Adjust based on payment type

@@ -20,6 +20,7 @@ class ApprovalRequestInherit(models.Model):
     employee = fields.Many2one('hr.employee', string="Employee")
     payment_count = fields.Integer(string="Payment Count", compute="_compute_payment_count", store=True)
 
+    @api.depends('payment_id')
     def _compute_payment_count(self):
         for record in self:
             record.payment_count = self.env['account.payment'].search_count([('approval_request_id', '=', record.id)])
